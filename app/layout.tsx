@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import { ReactNode } from "react";
 
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
+import Navbar from '../components/navigation/index';
 
 
 const inter = localFont({
@@ -43,8 +45,14 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
         <body
           className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
         >
-         
+          <ThemeProvider 
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange>
+           
             {children}
+            </ThemeProvider>
          
         </body>
      
