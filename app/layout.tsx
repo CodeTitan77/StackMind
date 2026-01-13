@@ -6,6 +6,9 @@ import { ReactNode } from "react";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from '../components/navigation/index';
+import { Toaster } from "sonner";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 
 const inter = localFont({
@@ -30,6 +33,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = async ({ children }: { children: ReactNode }) => {
+  const session= await auth();
 
 
   return (
@@ -41,10 +45,11 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
       </head>
-      
+     
         <body
           className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
         >
+            <SessionProvider session={session}>
           <ThemeProvider 
           attribute="class"
           defaultTheme="dark"
@@ -52,9 +57,13 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
           disableTransitionOnChange>
            
             {children}
+             <Toaster richColors position="top-right"/>
             </ThemeProvider>
+               </SessionProvider>
          
         </body>
+     
+       
      
     </html>
   );
